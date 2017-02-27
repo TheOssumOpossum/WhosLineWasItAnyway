@@ -5,13 +5,10 @@ from bing_key import *
 headers = {
     # Request headers
     'Content-Type': 'application/json',
-    "locale":"en-US",
     'Ocp-Apim-Subscription-Key': BING_KEY_SPEAKER,
-    'locale':"en-us",
 }
 
 params = urllib.urlencode({
-    'locale':'en-us',
 })
 
 
