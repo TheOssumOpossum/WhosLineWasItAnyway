@@ -40,7 +40,7 @@ import IdentificationResponse
 import EnrollmentResponse
 import ProfileCreationResponse
 import logging
-from bing_key import *
+from keys import *
 import wave
 
 class IdentificationServiceHttpClientHelper:

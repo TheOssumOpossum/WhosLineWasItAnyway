@@ -1,6 +1,6 @@
 from keys import *
 import http.client, urllib.request, urllib.parse, urllib.error, base64, json,logging
-from bing_key import *
+from keys import *
 from os import path
 from contextlib import closing
 import IdentifyFile
