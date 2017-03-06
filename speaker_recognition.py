@@ -53,4 +53,4 @@ def CreateProfile():
 	    print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
 def IdentifySpeaker(speakerIds,file):
-	IdentifyFile.identify_file(BING_KEY_SPEAKER, file, 'true', speakerIds)
+	return IdentifyFile.identify_file(BING_KEY_SPEAKER, file, 'true', speakerIds)
