@@ -51,6 +51,7 @@ def CreateProfile():
 	    conn.close()
 	except Exception as e:
 	    print("[Errno {0}] {1}".format(e.errno, e.strerror))
+	return data
 
 def IdentifySpeaker(speakerIds,file):
 	return IdentifyFile.identify_file(BING_KEY_SPEAKER, file, 'true', speakerIds)
