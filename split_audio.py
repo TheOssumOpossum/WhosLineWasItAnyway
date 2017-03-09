@@ -2,6 +2,7 @@ import os, librosa, scipy, numpy as np
 
 def split_audio(file_name,AudioChanges=None,ExportName='test'):
 	music, sr = librosa.load(file_name)
+	print("Sample Rate Detected: ",sr)
 	hop_length = 1024
 	n_fft = 2048
 	stft = librosa.stft(music, hop_length = hop_length, n_fft = n_fft)
@@ -60,7 +61,7 @@ def group_sections(matrix,estimated_sections = None, threshold_start = 0.075, th
         while (current_feature_vector < number_of_feature_vectors):
             if(matrix[start_of_section][current_feature_vector] > threshold): #split the audio when similarity matrix exceeds threshold
                 section_starts += [current_feature_vector]
-            	start_of_section = section_starts[-1]
+                start_of_section = section_starts[-1]
             current_feature_vector += 1
         section_starts += [number_of_feature_vectors]#add the last feature vector to audio splits
 
