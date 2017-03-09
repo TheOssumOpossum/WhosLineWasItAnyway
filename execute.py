@@ -5,13 +5,13 @@ import split_audio as SA
 from os import path, listdir
 from os.path import isfile, join
 
-testname = 'LatviaTest'
+testname = 'ObamaQuatro'
 
-# Obama_Interview = path.abspath('Obama_Interview_16.wav')
+Obama_Interview = path.abspath('Obama_Interview_16.wav')
 LatvianSports = path.abspath('testing_data//LatvianSports.wav')
-AT.Transcribe(LatvianSports)
+#AT.Transcribe(LatvianSports)
 # NumberOfSections = SA.split_audio(Obama_Interview,2,ExportName=testname)
-NumberOfSections = SA.split_audio(LatvianSports,3,ExportName=testname)
+NumberOfSections = SA.split_audio(Obama_Interview,4,ExportName=testname)
 
 
 filelist = [f for f in listdir(path.abspath('AudioSegments//')) if isfile(join(path.abspath('AudioSegments//'),f))]
