@@ -32,7 +32,7 @@ def split_audio(file_name,AudioChanges=None,ExportName='test'):
 				nrg += feature*feature
 		nrg/= len(log_spectrogram.T[i])
 		nrgs += [nrg]
-		print("Energy for feature #",i,": ",nrg)
+		#print("Energy for feature #",i,": ",nrg)
 
 	#Normalizing vector
 	# print(log_spectrogram.T[0])
