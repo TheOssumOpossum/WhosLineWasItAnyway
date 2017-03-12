@@ -28,11 +28,7 @@ wavesurfer.on('ready', function () {
         end: 5,
         color: 'hsla(100, 100%, 30%, 0.1)'
     })*/
-    var timeline = Object.create(WaveSurfer.Timeline);
-    timeline.init({
-        wavesurfer: wavesurfer,
-        container: '#waveform-timeline'
-    })
+    
 });
 
 /*
@@ -50,6 +46,11 @@ allow the user to interact with the selections
 wavesurfer.on('region-update-end', function () {
     document.getElementById("playselection").disabled = false;
     document.getElementById("choose").disabled = false;
+    document.getElementById("reset").disabled = false;
+});
+
+wavesurfer.on('finish', function () {
+   docuemnt.getElementById("playpause").textContent = "Play"; 
 });
 
 /*
@@ -91,6 +92,7 @@ function reset() {
     document.getElementById("input_name").hidden = true;
     document.getElementById("label").value = "";
     document.getElementById("rectangle").hidden = false;
+    document.getElementById("reset").disabled = true;
 }
 /*
 Displays the input box for the user to input a name label for the selected audio
@@ -137,19 +139,22 @@ function checkNames(arg) {
 
 function identify(arg) {
     var ii;
+    var z = document.getElementById("identifiedSpeakers").childNodes;
     for (ii = 0; ii < names.length; ii++) {
         if (arg == names[ii]) {
-            break;
+            z[ii].style.borderColor = "blue";
+            selectedEnrolledSpeaker = ii;
+        } else {
+            z[ii].style.borderColor = "black";
         }
     }
-
-    selectedEnrolledSpeaker = ii;
+    
     document.getElementById("playenrolled").disabled = false;
-    console.log("Identify");
+    document.getElementById("removeselection").disabled = false;
+    document.getElementById("transcribe").disabled = false;
 }
 
 function playEnrolled() {
-    console.log("playenrolled");
     var x = identifiedSpeakers[selectedEnrolledSpeaker];
     //wavesurfer.addRegion("temp", x[1], x[2]);
     wavesurfer.play(x[1], x[2]);
@@ -157,7 +162,6 @@ function playEnrolled() {
 }
 
 function displaySpeakers() {
-    console.log("display speakers");
     var jj;
     var x = identifiedSpeakers[index];
     var labels = ['Name: ','Start: ','End: '];
@@ -179,4 +183,18 @@ function displaySpeakers() {
     }
     document.getElementById("identifiedSpeakers").appendChild(node);
     index++; 
+}
+
+function removeSelection() {
+    document.getElementById("playenrolled").disabled = true;
+    document.getElementById("removeselection").disabled = true;
+    document.getElementById("transcribe").disabled = true;
+    var z = document.getElementById("identifiedSpeakers");
+    z.removeChild(z.childNodes[selectedEnrolledSpeaker]);
+    names.splice(selectedEnrolledSpeaker, 1);
+    identifiedSpeakers.splice(selectedEnrolledSpeaker, 1);
+    index--;
+    if (identifiedSpeakers.length == 0) {
+        document.getElementById("speakerList").hidden = true;
+    }
 }

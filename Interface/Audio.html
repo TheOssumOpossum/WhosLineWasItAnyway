@@ -15,14 +15,11 @@
             
        
         <div id="waveform"></div>
-        <div id="waveform-timeline"></div>
         
                 <!-- Main WaveSurfer Library -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.3.2/wavesurfer.min.js"></script>
         <!-- WaveSurfer Regions Library -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/plugin/wavesurfer.regions.min.js"></script>
-        <!-- Time Line Library -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/plugin/wavesurfer.timeline.min.js"></script>
         <!-- Local functions -->
         <script src="Audio_script.js"></script>
             
@@ -39,7 +36,7 @@
         <!-- Selection Controls -->
         <div class = selection-controls>
             <button id="playselection" onclick="playselection()" disabled = true>Play Selection</button>
-            <button id="reset" onclick="reset()">Clear Selection</button>
+            <button id="reset" onclick="reset()" disabled=true>Clear Selection</button>
             <button id="choose" onclick="chooseSelection()" disabled = true>Choose Selection</button>
             
             <div id = "input_name" hidden=true class = "selection-controls">
@@ -49,15 +46,17 @@
                 <p class = "warning" id = "warn"></p>
             </div>
             
-            <div id="rectangle" style="width:100%;height:86px;background-color:white;"></div>
+            <div id="rectangle" style="width:100%;height:86px;background-color:transparent;"></div>
        
         </div>
-            
+        <hr>    
             
         <div class = "dispIdentSpeakers" hidden=true id="speakerList">
             <center><table id = "identifiedSpeakers" class="dispIdentSpeakers"></table></center>
             <div class="selectedControls">
                 <button id="playenrolled" onclick="playEnrolled()" disabled=true>Play Selection</button>
+                <button id="removeselection" onclick="removeSelection()" disabled=true>Remove Selection</button>
+                <button id="transcribe" disabled = true>Transcribe!</button>
             </div>
         </div>     
         
