@@ -1,9 +1,9 @@
-from keys import *
 import http.client, urllib.request, urllib.parse, urllib.error, base64, json,logging
 from keys import *
-from os import path
+import os
 from contextlib import closing
 import IdentifyFile
+from scipy.io import wavfile as wavf
 
 
 def EnrollProfile(speakerId,file):
@@ -55,3 +55,12 @@ def CreateProfile():
 
 def IdentifySpeaker(speakerIds,file):
 	return IdentifyFile.identify_file(BING_KEY_SPEAKER, file, 'true', speakerIds)
+
+def generateEnrollAudio(file, start_time, end_time):
+	rate, full_file = wavf.read(file)
+	start_sample = rate * start_time
+	end_sample = rate * end_time
+	enrollAudio = full_file[int(start_sample):int(end_sample)]
+	wavf.write('enrollment_audio.wav', rate, enrollAudio)
+	return enrollAudio
+
