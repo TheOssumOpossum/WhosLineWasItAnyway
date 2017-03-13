@@ -1,4 +1,4 @@
-import http.client, urllib.request, urllib.parse, urllib.error, base64, json,logging
+import http.client, urllib.request, urllib.parse, urllib.error, base64, json,logging,pickle
 from keys import *
 import os
 from contextlib import closing
@@ -30,7 +30,10 @@ def EnrollProfile(speakerId,file):
 	except Exception as e:
 	    print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
-def CreateProfile():
+def CreateProfile(name=None):
+	if name is None:
+		print("Please give a name")
+		return
 	headers = {
 	    # Request headers
 	    'Content-Type': 'application/json',
@@ -47,11 +50,15 @@ def CreateProfile():
 	    conn.request("POST", "/spid/v1.0/identificationProfiles?%s" % params, body, headers)
 	    response = conn.getresponse()
 	    data = response.read()
-	    print(data)
+	    #print(data)
 	    conn.close()
 	except Exception as e:
 	    print("[Errno {0}] {1}".format(e.errno, e.strerror))
-	return data
+	newid = str(data).split("\"")[3]
+	print("Created Profile #: ",newid)
+	IdDictionary[newid] = name
+	pickle.dump(IdDictionary,open("idDict.p","wb"))
+	return newid
 
 def IdentifySpeaker(speakerIds,file):
 	return IdentifyFile.identify_file(BING_KEY_SPEAKER, file, 'true', speakerIds)
