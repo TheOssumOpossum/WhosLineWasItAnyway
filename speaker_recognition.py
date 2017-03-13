@@ -71,3 +71,15 @@ def generateEnrollAudio(file, start_time, end_time):
 	wavf.write('enrollment_audio.wav', rate, enrollAudio)
 	return enrollAudio
 
+def automatedProfileEnrollment(STarr, file):
+	for arr in STarr:
+		speaker = arr[0]
+		start = arr[1]
+		end = arr[2]
+		speakerID = CreateProfile(name=speaker)
+		eAudio = generateEnrollAudio(file, start, end)
+		EnrollProfile(speakerID, 'enrollment_audio.wav')
+	
+
+
+
