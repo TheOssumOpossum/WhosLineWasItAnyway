@@ -1,57 +1,62 @@
 import os, librosa, scipy, numpy as np
 from scipy.io import wavfile as wavf
 
-def split_audio(file_name,AudioChanges=None,ExportName='test'):
-	rate, sci_music = wavf.read(file_name)
-	music, sr = librosa.load(file_name)
-	print("Sample Rate Detected: ",sr)
-	hop_length = 1024
-	n_fft = 2048
+def split_audio(file_name,AudioChanges=None,ExportName='test',parameter='log',split='neighbor'):
+    rate, sci_music = wavf.read(file_name)
+    music, sr = librosa.load(file_name)
+    print("Sample Rate Detected: ",sr)
+    hop_length = 1024
+    n_fft = 2048
 
-	#mfcc - we think this should work but it doesnt
-	#mfcc = librosa.feature.mfcc(y=music, sr=sr)
-	#mat = sim_matrix(mfcc.T)
+    #mfcc - we think this should work but it doesnt
+    if parameter == 'mfcc':
+        mfcc = librosa.feature.mfcc(y=music, sr=sr)
+        mfcc_short = mfcc[1:12,:]
+        mfcc_diff = np.vstack((mfcc_short[:,:-1],np.diff(mfcc_short)))
+        mat = sim_matrix(np.diff(mfcc_short).T)
 
-	#chroma - this doesnt work
-	#chroma = librosa.feature.chroma_stft(y=music, sr=sr, S=None,hop_length=hop_length)
-	#mat = sim_matrix(chroma.T)
+    #chroma - this doesnt work
+    if parameter == 'chroma':
+        chroma = librosa.feature.chroma_stft(y=music, sr=sr, S=None,hop_length=hop_length)
+        mat = sim_matrix(chroma.T)
 
-	#log_spectrogram - this works really well
-	stft = librosa.stft(music, hop_length = hop_length, n_fft = n_fft)	
-	log_spectrogram = librosa.logamplitude(np.abs(stft**2), ref_power=np.max)
-	mat = sim_matrix(log_spectrogram.T)
+    #log_spectrogram - this works really well
+    if parameter == 'log':
+        stft = librosa.stft(music, hop_length = hop_length, n_fft = n_fft)	
+        log_spectrogram = librosa.logamplitude(np.abs(stft**2), ref_power=np.max)
+        mat = sim_matrix(log_spectrogram.T)
 
-	#trying to get some sort of measure for silence
-	print(log_spectrogram.T[0])
-	features = range(len(log_spectrogram.T))
-	nrgs = []
-	for i in features:
-		nrg = 0
-		for feature in log_spectrogram.T[i]:
-			if feature > -80.0:
-				nrg += feature*feature
-		nrg/= len(log_spectrogram.T[i])
-		nrgs += [nrg]
-		#print("Energy for feature #",i,": ",nrg)
+    #trying to get some sort of measure for silence
+    nrgs = None
+    # print(log_spectrogram.T[0])
+    # features = range(len(log_spectrogram.T))
+    # nrgs = []
+    # for i in features:
+    # 	nrg = 0
+    # 	for feature in log_spectrogram.T[i]:
+    # 		if feature > -80.0:
+    # 			nrg += feature*feature
+    # 	nrg/= len(log_spectrogram.T[i])
+    # 	nrgs += [nrg]
+	   	#print("Energy for feature #",i,": ",nrg)
 
-	#Normalizing vector
-	# print(log_spectrogram.T[0])
-	# for feature_vector in range(len(log_spectrogram.T)):
-	# 	maxval = 0
-	# 	for feature in range(len(log_spectrogram.T[feature_vector])):
-	# 		log_spectrogram.T[feature_vector][feature] = log_spectrogram.T[feature_vector][feature]**2
-	# 		if log_spectrogram.T[feature_vector][feature] > maxval:
-	# 			maxval = log_spectrogram.T[feature_vector][feature] 
-	# 	for feature in range(len(log_spectrogram.T[feature_vector])):
-	# 		log_spectrogram.T[feature_vector][feature] /= float(maxval)
-	# print(log_spectrogram.T[0])
+    #Normalizing vector
+    # print(log_spectrogram.T[0])
+    # for feature_vector in range(len(log_spectrogram.T)):
+    # 	maxval = 0
+    # 	for feature in range(len(log_spectrogram.T[feature_vector])):
+    # 		log_spectrogram.T[feature_vector][feature] = log_spectrogram.T[feature_vector][feature]**2
+    # 		if log_spectrogram.T[feature_vector][feature] > maxval:
+    # 			maxval = log_spectrogram.T[feature_vector][feature] 
+    # 	for feature in range(len(log_spectrogram.T[feature_vector])):
+    # 		log_spectrogram.T[feature_vector][feature] /= float(maxval)
+    # print(log_spectrogram.T[0])
 
 
-
-	sections = group_sections(mat,AudioChanges,nrgs=nrgs)
-	print("Section Labels: ",sections)	
-	write_audio(sci_music,sections,mat,sr=rate,audio_name = ExportName)
-	return len(sections)-1
+    sections = group_sections(mat,AudioChanges,nrgs=nrgs,splitby = split)
+    print("Section Labels: ",sections)	
+    write_audio(sci_music,sections,mat,sr=rate,audio_name = ExportName)
+    return len(sections)-1
 
 
 def sim_matrix(feature_vectors, distance_metric = 'cosine'):
@@ -59,12 +64,13 @@ def sim_matrix(feature_vectors, distance_metric = 'cosine'):
     matrix = scipy.spatial.distance.squareform(Y)
     return matrix
 
-def group_sections(matrix,estimated_sections = None, threshold_start = 0.07, threshold_increment = 0.0001,nrgs=None):
+def group_sections(matrix,estimated_sections = None, threshold_start = 0.07, threshold_increment = 0.00005,nrgs=None,splitby='neighbor'):
 	#matrix - similarity matrix
 	#estimated_sections - group_sections tries to split the audio by number of sections, if None, use old code and ignore rest of args
 	#threshold_start - first threshold for splitting
 	#threshold_increment - threshold increment if previous threshold produced too many audio splits
     current_feature_vector = 1
+    min_length = 30
     section_starts = [0]
     start_of_section = 0
     threshold = threshold_start
@@ -74,7 +80,15 @@ def group_sections(matrix,estimated_sections = None, threshold_start = 0.07, thr
 
     #split the audio with threshold_start
     while (current_feature_vector < number_of_feature_vectors):
-        if(matrix[start_of_section][current_feature_vector] > threshold and abs(start_of_section-current_feature_vector)>30): #split the audio when similarity matrix exceeds threshold
+        comparing_vector = 0
+        if splitby == 'neighbor':
+            comparing_vector = current_feature_vector-1
+        else:
+            #splitby start
+            comparing_vector = start_of_section
+        #if(matrix[start_of_section][current_feature_vector] > threshold and abs(start_of_section-current_feature_vector)>min_length): #split the audio when similarity matrix exceeds threshold
+        if(matrix[comparing_vector][current_feature_vector] > threshold and abs(start_of_section-current_feature_vector)>min_length): #split the audio when similarity matrix exceeds threshold
+
             #print("Splitting from feature #",start_of_section," to feature #",current_feature_vector-1)
             current_feature_vector -= 1
             section_starts += [current_feature_vector]
@@ -104,7 +118,14 @@ def group_sections(matrix,estimated_sections = None, threshold_start = 0.07, thr
         	threshold += threshold_increment
         #print("new threshold: ", threshold)
         while (current_feature_vector < number_of_feature_vectors):
-            if(matrix[start_of_section][current_feature_vector] > threshold and abs(start_of_section-current_feature_vector)>30): #split the audio when similarity matrix exceeds threshold
+            comparing_vector = 0
+            if splitby == 'neighbor':
+                comparing_vector = current_feature_vector-1
+            else:
+                #splitby start
+                comparing_vector = start_of_section
+            #if(matrix[start_of_section][current_feature_vector] > threshold and abs(start_of_section-current_feature_vector)>min_length): #split the audio when similarity matrix exceeds threshold
+            if(matrix[comparing_vector][current_feature_vector] > threshold and abs(start_of_section-current_feature_vector)>min_length): #split the audio when similarity matrix exceeds threshold
                 #print("Splitting from feature #",start_of_section," to feature #",current_feature_vector-1)
                 current_feature_vector -= 1
                 section_starts += [current_feature_vector]
