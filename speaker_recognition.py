@@ -72,14 +72,17 @@ def generateEnrollAudio(file, start_time, end_time):
 	return enrollAudio
 
 def automatedProfileEnrollment(STarr, file):
+	everybody = []
 	for arr in STarr:
 		speaker = arr[0]
 		start = arr[1]
 		end = arr[2]
 		speakerID = CreateProfile(name=speaker)
+		everybody.append(speakerID) # add to the list of all speakers' IDs that we will check for in speaker recognition
 		eAudio = generateEnrollAudio(file, start, end)
 		EnrollProfile(speakerID, 'enrollment_audio.wav')
-	
+	return everybody
+
 
 
 
