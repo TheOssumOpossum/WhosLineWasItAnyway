@@ -4,7 +4,7 @@ from scipy.io import wavfile as wavf
 def split_audio(file_name,AudioChanges=None,ExportName='test',parameter='log',split='neighbor'):
     rate, sci_music = wavf.read(file_name)
     music, sr = librosa.load(file_name)
-    print("Sample Rate Detected: ",sr)
+    #print("Sample Rate Detected: ",sr)
     hop_length = 1024
     n_fft = 2048
 
@@ -54,7 +54,7 @@ def split_audio(file_name,AudioChanges=None,ExportName='test',parameter='log',sp
 
 
     sections = group_sections(mat,AudioChanges,nrgs=nrgs,splitby = split)
-    print("Section Labels: ",sections)	
+    #print("Section Labels: ",sections)	
     write_audio(sci_music,sections,mat,sr=rate,audio_name = ExportName)
     return len(sections)-1
 
@@ -96,7 +96,7 @@ def group_sections(matrix,estimated_sections = None, threshold_start = 0.07, thr
         current_feature_vector += 1
     section_starts += [number_of_feature_vectors]#add the last feature vector to audio splits
     if estimated_sections is None or len(section_starts) == estimated_sections:
-        print("Split into ",len(section_starts)-1," sections")
+        #print("Split into ",len(section_starts)-1," sections")
         return section_starts
 
     #used when a jump of threshold_increment goes from too many to too few splits (or vice versa)
@@ -135,23 +135,23 @@ def group_sections(matrix,estimated_sections = None, threshold_start = 0.07, thr
 
         #print(len(section_starts)-1)
         if len(section_starts) == estimated_sections:
-        	print("old splitting: ",len(old_sections)-1," new splitting: ",len(section_starts)-1," estimated splits: ",estimated_sections-1, " final_thresh: ", threshold)
+        	#print("old splitting: ",len(old_sections)-1," new splitting: ",len(section_starts)-1," estimated splits: ",estimated_sections-1, " final_thresh: ", threshold)
         	return section_starts
         if len(section_starts) > estimated_sections:
         	toobig = True
         if len(section_starts) < estimated_sections:
         	toosmall = True
         if toosmall and toobig:
-        	print("old splitting: ",len(old_sections)-1," new splitting: ",len(section_starts)-1," estimated splits: ",estimated_sections-1, " final_thresh: ", threshold)
+        	#print("old splitting: ",len(old_sections)-1," new splitting: ",len(section_starts)-1," estimated splits: ",estimated_sections-1, " final_thresh: ", threshold)
         	if len(section_starts) == 2:
         		return old_sections
         	if len(old_sections) == 2:
         		return section_starts
         	if abs(len(old_sections) -estimated_sections) < abs(len(section_starts) - estimated_sections):
-        		print("returning old")
+        		#print("returning old")
         		return old_sections
         	else:
-        		print("returning new")
+        		#print("returning new")
         		return section_starts
 
 
