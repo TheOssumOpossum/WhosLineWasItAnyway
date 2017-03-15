@@ -56,32 +56,12 @@ def CreateProfile(name=None):
 	    print("[Errno {0}] {1}".format(e.errno, e.strerror))
 	newid = str(data).split("\"")[3]
 	print("Created Profile #: ",newid)
-	IdDictionary[newid] = name
-	pickle.dump(IdDictionary,open("idDict.p","wb"))
+	#IdDictionary[newid] = name
+	#pickle.dump(IdDictionary,open("idDict.p","wb"))
 	return newid
 
 def IdentifySpeaker(speakerIds,file):
 	return IdentifyFile.identify_file(BING_KEY_SPEAKER, file, 'true', speakerIds)
-
-def generateEnrollAudio(file, start_time, end_time):
-	rate, full_file = wavf.read(file)
-	start_sample = rate * start_time
-	end_sample = rate * end_time
-	enrollAudio = full_file[int(start_sample):int(end_sample)]
-	wavf.write('enrollment_audio.wav', rate, enrollAudio)
-	return enrollAudio
-
-def automatedProfileEnrollment(STarr, file):
-	everybody = []
-	for arr in STarr:
-		speaker = arr[0]
-		start = arr[1]
-		end = arr[2]
-		speakerID = CreateProfile(name=speaker)
-		everybody.append(speakerID) # add to the list of all speakers' IDs that we will check for in speaker recognition
-		eAudio = generateEnrollAudio(file, start, end)
-		EnrollProfile(speakerID, 'enrollment_audio.wav')
-	return everybody
 
 
 
