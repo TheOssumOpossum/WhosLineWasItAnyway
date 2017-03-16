@@ -13,7 +13,7 @@ def split_audio(file_name,AudioChanges=None,ExportName='test',parameter='log',sp
         mfcc = librosa.feature.mfcc(y=music, sr=sr)
         mfcc_short = mfcc[1:12,:]
         mfcc_diff = np.vstack((mfcc_short[:,:-1],np.diff(mfcc_short)))
-        mat = sim_matrix(np.diff(mfcc_short).T)
+        mat = sim_matrix(mfcc_diff.T)
 
     #chroma - this doesnt work
     if parameter == 'chroma':
