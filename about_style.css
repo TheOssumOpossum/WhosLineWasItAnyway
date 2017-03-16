@@ -39,10 +39,15 @@ a:vistied {
     color: white;
 }
 
+.content {
+    width: 70%;
+    margin: auto;
+}
+
 .bio_vincent {
     margin: 5px;
     position: static;
-    height: 250px;
+    height: 200px;
 }
 
 .bio_vincent img {
@@ -65,7 +70,7 @@ a:vistied {
 .bio_madhav {
     right: 0px;
     position: static;
-    height: 250px;
+    height: 200px;
 }
 
 .bio_madhav img {
@@ -88,7 +93,7 @@ a:vistied {
 .bio_jeremy {
     position: static;
     margin: 5px;
-    height: 250px;
+    height: 200px;
 }
 
 .bio_jeremy img {

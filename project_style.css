@@ -1,10 +1,17 @@
 body {
     font-family: sans-serif;
-    margin: 0px;
+    margin: 0px 0px 50px 0px;
 }
 
-h1 {
-    margin-left: 10px;
+
+
+p.content {
+    margin: 0px 10px 0px 10px;
+}
+
+.content {
+    width: 70%;
+    margin: auto;
 }
 
 #footer {
