@@ -188,7 +188,7 @@ function displaySpeakers() {
 function removeSelection() {
     document.getElementById("playenrolled").disabled = true;
     document.getElementById("removeselection").disabled = true;
-    document.getElementById("transcribe").disabled = true;
+    document.getElementById("transcribe").disabled = false;
     var z = document.getElementById("identifiedSpeakers");
     z.removeChild(z.childNodes[selectedEnrolledSpeaker]);
     names.splice(selectedEnrolledSpeaker, 1);
@@ -197,4 +197,20 @@ function removeSelection() {
     if (identifiedSpeakers.length == 0) {
         document.getElementById("speakerList").hidden = true;
     }
+}
+
+function transcribe() {
+    var f = document.getElementById("finalsubmit");
+    var ii;
+    var jj;
+    for (ii = 0; ii < identifiedSpeakers.length; ii++) {
+        var x = identifiedSpeakers[ii];
+        for (jj = 0; jj < 3; jj++) {
+            var z = document.createElement("input");
+            z.value = x[jj];
+            z.type = "text";
+            f.appendChild(z);
+        }
+    }
+    f.submit();
 }
