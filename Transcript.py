@@ -8,6 +8,8 @@ from scipy.io import wavfile as wavf
 
 def Project(STarr,file,name='test'):
 	speakerDictionary = automatedProfileEnrollment(STarr,file)
+	f = open('numberofsegments.txt','t')
+	splits = int(f.read())
 	transcript = Create_Transcript(file,speakerDictionary,name,2)
 	#look for the file called name.txt
 	return transcript
