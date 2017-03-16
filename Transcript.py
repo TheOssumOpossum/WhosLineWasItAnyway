@@ -6,7 +6,26 @@ from os import path, listdir
 from os.path import isfile, join
 from scipy.io import wavfile as wavf
 
+def stringParse(STarr):
+	words = [str(i) for i in STarr.split()]
+	row = 0
+	col = 0
+	STarr = []
+	for i in words:
+		if col == 0:
+			STarr.append([i])
+		if col == 1:
+			STarr[row].append(float(i))
+		if col == 2:
+			STarr[row].append(float(i))
+			row += 1
+		col += 1
+		col = col %3
+	return STarr
+
 def Project(STarr,file,name='test'):
+	if isinstance(STarr,type("str")):
+		stringParse(STarr)
 	speakerDictionary = automatedProfileEnrollment(STarr,file)
 	f = open('numberofsegments.txt','t')
 	splits = int(f.read())
