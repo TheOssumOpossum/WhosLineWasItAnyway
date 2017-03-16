@@ -1,6 +1,6 @@
 #written python 2.7
-from pyAudioAnalysis import audioBasicIO as aIO
-from pyAudioAnalysis import audioSegmentation as aS
+from pyAudioAnalysi import audioBasicIO as aIO
+from pyAudioAnalysi import audioSegmentation as aS
 
 def PreProcess(file):
 	#returns numberofsegments in textfile
