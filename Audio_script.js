@@ -114,9 +114,10 @@ function enrollSpeaker() {
     var name = document.getElementById("label").value;
     if (name == "") {
         document.getElementById("warn").innerHTML = "Please enter a name for the selection";
-    } else if (checkNames(name)) {
-        document.getElementById("warn").innerHTML = "Name already assigned";  
-    } else {
+    } //else if (checkNames(name)) {
+      //  document.getElementById("warn").innerHTML = "Name already assigned";  
+    //} else {
+    else {
         var x = wavesurfer.regions.list.speaking;
         var data = [name, x.start, x.end];
         identifiedSpeakers.push(data);
