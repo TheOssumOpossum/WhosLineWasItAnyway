@@ -209,6 +209,13 @@ function transcribe() {
             var z = document.createElement("input");
             z.value = x[jj];
             z.type = "text";
+            if (jj == 0) {
+                z.name = "name" + ii;
+            } else if (jj == 1) {
+                z.name = "start" + ii;
+            } else {
+                z.name = "end" + ii;
+            }
             f.appendChild(z);
         }
     }
