@@ -220,6 +220,20 @@ function transcribe() {
             f.appendChild(z);
         }
     }
-    console.log(identifiedSpeakers);
+    //console.log(identifiedSpeakers);
+    text = "";
+    for(ii = 0; ii<identifiedSpeakers.length;i++){
+        var xx = identifiedSpeakers[ii];
+        for (jj = 0; jj < 3;jj++){
+            if(jj == 0){
+                text += xx[jj] + " ";
+            }
+            else{
+                xxx = xx[jj]
+                text += xxx.toString() + " ";
+            }
+        }
+    }
+    console.log(text)
     //f.submit();
 }
