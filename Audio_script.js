@@ -221,5 +221,5 @@ function transcribe() {
         }
     }
     console.log(identifiedSpeakers);
-    f.submit();
+    //f.submit();
 }
