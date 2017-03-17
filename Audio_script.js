@@ -13,7 +13,9 @@ var names = [];
 if (sessionStorage.getItem("file_name") !== null) {
     wavesurfer.load(sessionStorage.getItem("file_name"));
 } else {
-    wavesurfer.load('Obama_Interview_16.wav');
+//    wavesurfer.load('Obama_Interview_16.wav');
+    wavesurfer.load('obama_interview_long.wav');
+
 }
 
 wavesurfer.on('ready', function () {

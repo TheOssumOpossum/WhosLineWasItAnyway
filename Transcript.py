@@ -25,9 +25,9 @@ def stringParse(STarr):
 
 def Project(STarr,file,name='test'):
 	if isinstance(STarr,type("str")):
-		stringParse(STarr)
+		STarr = stringParse(STarr)
 	speakerDictionary = automatedProfileEnrollment(STarr,file)
-	f = open('numberofsegments.txt','t')
+	f = open('numberofsegments.txt','rb')
 	splits = int(f.read())
 	transcript = Create_Transcript(file,speakerDictionary,name,2)
 	#look for the file called name.txt
