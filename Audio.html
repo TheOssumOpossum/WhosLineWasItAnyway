@@ -65,8 +65,8 @@
             <div class="selectedControls">
                 <button id="playenrolled" onclick="playEnrolled()" disabled=true>Play Selection</button>
                 <button id="removeselection" onclick="removeSelection()" disabled=true>Remove Selection</button>
-                <!-- <button id="transcribe" onclick=transcribe()>Transcribe!</button> -->
-                <a href="transcription.html"><button id="transcribe">Transcribe!</button></a>
+                <button id="transcribe" onclick=transcribe()>Transcribe!</button>
+                <!-- <a href="transcription.html"><button id="transcribe">Transcribe!</button></a> -->
             </div>
         </div>    
         <form id="finalsubmit" action={{ url_for('transcribe') }}, method="post"></form>

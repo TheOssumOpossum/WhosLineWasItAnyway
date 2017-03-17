@@ -220,5 +220,6 @@ function transcribe() {
             f.appendChild(z);
         }
     }
+    console.log(identifiedSpeakers);
     f.submit();
 }
