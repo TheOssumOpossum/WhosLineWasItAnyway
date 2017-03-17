@@ -23,7 +23,7 @@
 
             <h3>Upload a WAV file to get started!</h3>
             <form id="files" action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
-                <input type="file" id="upload" name="file" onchange="checkUpload()"> 
+                <input type="file" id="upload" name="file" onchange="checkUpload()">
             </form>
             <div class = "submit">
                 <button onclick="cont()" disabled="true" id="submit">Continue</button>
