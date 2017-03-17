@@ -222,7 +222,7 @@ function transcribe() {
     }
     //console.log(identifiedSpeakers);
     text = "";
-    for(ii = 0; ii<identifiedSpeakers.length;i++){
+    for(ii = 0; ii<identifiedSpeakers.length;ii++){
         var xx = identifiedSpeakers[ii];
         for (jj = 0; jj < 3;jj++){
             if(jj == 0){
@@ -235,5 +235,6 @@ function transcribe() {
         }
     }
     console.log(text)
+    return;
     //f.submit();
 }
