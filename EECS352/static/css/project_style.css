@@ -1,0 +1,51 @@
+body {
+    font-family: sans-serif;
+    margin: 0px 0px 50px 0px;
+}
+
+
+
+p.content {
+    margin: 0px 10px 0px 10px;
+}
+
+.content {
+    width: 70%;
+    margin: auto;
+}
+
+#footer {
+    position: relative;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    background-color: rgba(104,104,104,1);
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+ul.footer {
+    color: white;
+    text-align: left;
+    list-style-type: none;
+    margin: 0px;
+    padding-top: 13px;
+    padding-left: 
+}
+
+a  {
+    color: white;
+}
+
+a:vistied {
+    color: white;
+}
+
+li.footer {
+    list-style-type: none;
+    align-content: left;
+    display: inline;
+    padding: 5px;
+    padding-right: 10px;
+}

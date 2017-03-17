@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Whose Line Was It Anyway?</title>
+        <link rel="stylesheet" href="static/css/Home_style.css">
+    </head>
+    
+    <script src="static/js/Home_script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <body>  
+        <div id = "footer">
+            <ul class = "footer">
+                <li class="footer"><a href="{{ url_for('home') }}">Home</a></li>
+                <li class="footer"><a href="{{ url_for('project') }}">Our Project</a></li>
+                <li class="footer"><a href="{{ url_for('about') }}">About Us</a></li>
+            </ul>
+        </div>
+        
+        
+        <div class = "content">
+            <h1>Whose Line Was It Anyway?</h1>
+            <p>Automatic transcript generation</p>
+
+            <h3>Upload a WAV file to get started!</h3>
+            <form id="files" action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+                <input type="file" id="upload" name="file" onchange="checkUpload()"> 
+            </form>
+            <div class = "submit">
+                <button onclick="cont()" disabled="true" id="submit">Continue</button>
+            </div>
+            <p class = "warning" id = "warn"></p>
+        </div>
+        
+        <div class=footnote>
+            <table class="footnote">
+                <tr>
+                    <td>Vincent Bommier</td>
+                    <td>Madhav Ghei</td>
+                    <td>Jeremy Kaish</td>
+                </tr>
+                <tr style="font-size:75%;">
+                    <td>vincentbommier2018@u.northwestern.edu</td>
+                    <td>madhavghei2018@u.northwestern.edu</td>
+                    <td>jeremykaish2018@u.northwestern.edu</td>
+                </tr>
+            </table>
+            <hr>
+            <p style="font-weight:bold;">Northwestern University, EECS 352, Professor Bryan Pardo</p> 
+            
+        </div>    
+        
+        
+    </body>
+
+   
+
+
+
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<title>Whose Line Was It Anyway?</title>
+<link rel='stylesheet' type="text/css" href='static/css/transcript.css'>
+<div>
+    <h1>Transcript of SHIT</h1>
+    <div id = "footer">
+        <ul class = "footer">
+            <li class="footer"><a href="{{ url_for('home') }}">Home</a></li>
+            <li class="footer"><a href="{{ url_for('project') }}">Our Project</a></li>
+            <li class="footer"><a href="{{ url_for('about') }}">About Us</a></li>
+        </ul>
+    </div>
+    {% block body %}{% endblock %}
+</div>

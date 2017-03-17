@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Our Project</title>
+        <link rel="stylesheet" href="static/css/project_style.css">
+    </head>
+    
+    <body>
+        <div id = "footer">
+            <ul class = "footer">
+                <li class="footer"><a href="{{ url_for('home') }}">Home</a></li>
+                <li class="footer"><a href="{{ url_for('project') }}">Our Project</a></li>
+                <li class="footer"><a href="{{ url_for('about') }}">About Us</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <h1>Our Project</h1>
+            <h3>The Problem</h3>
+            <p>The main motivation for our project is to provide a tool for transcribing interviews, podcasts, and anything in which two or more people are talking and an auto-generated caption might be useful. This would be a tool that journalists could use to streamline their workflow and concentrate their efforts on other aspects of their job, as opposed to the menial and often time-consuming task of transcription. At the very least, this tool aims to reduce the amount of work a journalist must spend on transcription.</p>
+            <hr>
+            <h3>How Does It Work?</h3>
+            <p>Users will submit a wave audio file containing a conversation between two or more people. The user will then select portions of the audio in which only one person is talking, and will do this for each speaker in the conversation. Then, a profile for that user is created with that audio clip, which will be used for speaker identification. The program then uses a self-similarity measure to identify points in the audio at which one speaker stops speaking and another starts. It segments the original audio file and splits it into multiple files. Each file will then be analyzed by the speech identification API, the speaker will be identified, and the text of the audio file transcribed. This will be written in the format of a transcript, where the speaker’s name precedes the words they said. </p>
+            <hr>
+            <h3>Methodology</h3>
+            <p>We used Python 3 to accomplish all the backend processing, segmenting and transcribing of the audio files. For speaker recognition and transcription, we used Microsoft’s Bing Speaker Identification and Speech to Text APIs. We used a HTML/CSS/JavaScript frontend along with the wavesurfer.js library for manipulating waveforms and displaying them to the user. </p>
+            <p>We tested the performance of our transcription software upon two major criteria: (1) How well it segmented the audio files into smaller files where only one speaker was talking, and (2) How accurate the final transcription was (regarding both the speaker identification and the speech to text conversion). For both of these instances we utilized f-score as a measure of our success. </p>
+            <p>In terms of testing data, we primarily used two files: one of a clip of an NPR interview, where an interviewer asked President Obama a question, and he started his response, and another of the three of us reading different sections from a Wikipedia article on sports in Latvia. Because we are using the Bing API, our speech to text and speech recognition f-scores are something that would primarily be determined by how well our audio was segmented</p>
+            <hr>
+            <h3>Results</h3>
+    
+        </div>
+    </body>
+
+
+
+
+</html>
