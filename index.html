@@ -21,13 +21,15 @@
             <h1>Whose Line Was It Anyway?</h1>
             <p>Automatic transcript generation</p>
 
-            <h3>Upload a WAV file to get started!</h3>
+            <h3 style="margin-bottom:0px;">Upload a WAV file to get started!</h3>
+            <p style="margin-bottom:17px;">Note: WAV files should be 16kHz and monophonic</p>
 
-            <input type="file" id="upload" onchange="checkUpload()"> 
+            <input type="file" id="upload" onchange="checkUpload()" disabled=true> 
             <div class = "submit">
                 <button onclick="location.href='Audio.html'" disabled="true" id="submit">Continue</button>
             </div>
             <p class = "warning" id = "warn"></p>
+            <p>The app is not currently live. Head over to <a href="project.html">Our Project</a> to see a demo.</p>
         </div>
         
         <div class=footnote>
@@ -46,7 +48,8 @@
             <hr>
             <p style="font-weight:bold;">Northwestern University, EECS 352, Professor Bryan Pardo</p> 
             
-        </div>    
+        </div>  
+        
         
         
     </body>
