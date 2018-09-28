@@ -1,2 +1,3 @@
 # WhosLineWasItAnyway
-EECS 352 Project
+
+Interview and conversation transcription tool with speaker identification
